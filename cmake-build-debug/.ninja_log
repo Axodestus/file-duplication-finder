@@ -1,0 +1,5 @@
+# ninja log v5
+0	18	1642773835075839567	build.ninja	c3fe419cb3abcc26
+0	571	1642773058182886211	CMakeFiles/duplication_finder.dir/main.cxx.o	39223e4611d3b7a2
+571	608	1642773058218886173	duplication_finder	fa87782e7a7ea957
+1	588	1642772267937131707	CMakeFiles/duplication_finder.dir/main.cpp.o	e8a343c0056020eb

@@ -1,0 +1,5 @@
+/home/duckway/clion-2021.2.3/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/duckway/clion-2021.2.3/bin/ninja/linux/ninja -G Ninja /home/duckway/programming/duplication-finder
+-- Could NOT find Boost: missing: crc (found /usr/lib/cmake/Boost-1.78.0/BoostConfig.cmake (found suitable version "1.78.0", minimum required is "1.78.0"))
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/duckway/programming/duplication-finder/cmake-build-debug
