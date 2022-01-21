@@ -1,9 +1,26 @@
 #ifndef DUPLICATION_FINDER_FILE_SYSTEM_PROCESSOR_H
 #define DUPLICATION_FINDER_FILE_SYSTEM_PROCESSOR_H
 
-namespace Processor {
-    class FileSystemProcessor {
+#include <filesystem>
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <memory>
+#include "entity/file.h"
 
+namespace Processor {
+
+    using File = Processor::Entity::File;
+
+    class FileSystemProcessor {
+    private:
+        std::vector<std::unique_ptr<File>> fileList;         // too many may be
+        const std::string directoryPath;
+    public:
+        explicit FileSystemProcessor(std::string &&directoryPath);
+        void fillListOfFiles();
+        void debugPrint();
     };
 }
 

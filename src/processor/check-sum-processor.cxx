@@ -3,23 +3,24 @@
 #include "check-sum-processor.h"
 
 namespace Processor {
+    CheckSumProcessor::CheckSumProcessor(std::string &&fileName) : file(std::move(fileName)) {}
 
-    CheckSumProcessor::CheckSumProcessor(std::string &&fileName) :
-    fileName(fileName) {}
-
-    const CRC32Type &CheckSumProcessor::getFileCheckSum() const {
-        return fileCheckSum;
+    void CheckSumProcessor::calculateChunkHash(std::streamsize size) {
+        checkSumBuilder.process_bytes(fileChunkBuffer, size);
     }
 
-    void CheckSumProcessor::setFileCheckSum(const CRC32Type &fileCheckSum) {
-        CheckSumProcessor::fileCheckSum = fileCheckSum;
-    }
+    auto CheckSumProcessor::calculateCheckSum(){
+        if (!file.getCurrentFileStream()) {
+            std::cerr << "Could not open the file..." << file.getFileName() << std::endl;
+            exit(1);
+        }
 
-    const std::string &CheckSumProcessor::getFileName() const {
-        return fileName;
-    }
+        do {
+            file.getCurrentFileStream().read(fileChunkBuffer, buffer_size);
 
-    void CheckSumProcessor::setFileName(const std::string &fileName) {
-        CheckSumProcessor::fileName = fileName;
+            calculateChunkHash(file.getCurrentFileStream().gcount());
+
+        } while (file.getCurrentFileStream());
+        return checkSumBuilder.checksum();
     }
 }

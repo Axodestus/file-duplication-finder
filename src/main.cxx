@@ -3,7 +3,7 @@
 #include <string>
 #include <fstream>
 #include <filesystem>
-#include <unordered_map>
+#include "processor/file-system-processor.h"
 
 #define BUF_SIZE 1024
 
@@ -42,6 +42,10 @@ int main() {
     cout_directory_content(folder1);
     std::cout << "========================" << std::endl;
     cout_directory_content(folder2);
+    std::cout << "=======================" << std::endl;
+    Processor::FileSystemProcessor proc("/");
+    proc.fillListOfFiles();
+    proc.debugPrint();
 
     return 0;
 }
