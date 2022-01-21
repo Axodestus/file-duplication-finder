@@ -1,14 +1,11 @@
-//
-// Created by duckway on 1/21/22.
-//
-
 #ifndef DUPLICATION_FINDER_FILE_SYSTEM_PROCESSOR_H
 #define DUPLICATION_FINDER_FILE_SYSTEM_PROCESSOR_H
 
+namespace Processor {
+    class FileSystemProcessor {
 
-class FileSystemProcessor {
-
-};
+    };
+}
 
 
 #endif //DUPLICATION_FINDER_FILE_SYSTEM_PROCESSOR_H
