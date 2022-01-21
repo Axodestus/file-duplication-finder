@@ -1,3 +1,0 @@
-/home/duckway/programming/duplication-finder/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/duckway/programming/duplication-finder/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/duckway/programming/duplication-finder/cmake-build-debug/CMakeFiles/duplication_finder.dir
