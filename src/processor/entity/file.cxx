@@ -6,8 +6,11 @@ namespace Processor::Entity {
                                          currentFileStream(fileName, std::ios_base::binary) {
     }
 
-    File::File(std::filesystem::path &&filePath) : filePath(filePath), fileName(filePath.string()),
+    File::File(const std::filesystem::path &filePath) : filePath(filePath), fileName(filePath.string()),
                                                    currentFileStream(fileName, std::ios_base::binary) {
+    }
+
+    File::File() {
     }
 
     File::~File() {

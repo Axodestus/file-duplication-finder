@@ -1,9 +1,10 @@
-#include <boost/crc.hpp>
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <filesystem>
+
 #include "processor/file-system-processor.h"
+#include "processor/check-sum-processor.h"
 
 #define BUF_SIZE 1024
 
@@ -43,8 +44,10 @@ int main() {
     std::cout << "========================" << std::endl;
     cout_directory_content(folder2);
     std::cout << "=======================" << std::endl;
-    Processor::FileSystemProcessor proc("/");
+
+    Processor::FileSystemProcessor proc("/home/duckway");
     proc.fillListOfFiles();
+    Processor::CheckSumProcessor check(proc.getFileList());
     proc.debugPrint();
 
     return 0;

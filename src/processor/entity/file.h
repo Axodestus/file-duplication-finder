@@ -9,20 +9,19 @@ namespace Processor::Entity {
 
     class File {
     private:
-        std::filesystem::path filePath;
-    public:
-        const std::filesystem::path &getFilePath() const;
-
-    private:
-
-        std::string fileName;
+        const std::filesystem::path filePath;
+        const std::string fileName;
         std::ifstream currentFileStream;
     public:
+        File();
+        File(File &file) = delete;
+        File(File &&file) = default;
         File(std::string &&fileName);
-        File(std::filesystem::path &&fileName);
+        File(const std::filesystem::path &filePath);
         ~File();
         const std::string &getFileName() const;
         std::ifstream &getCurrentFileStream();
+        const std::filesystem::path &getFilePath() const;
     };
 }
 

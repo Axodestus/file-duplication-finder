@@ -6,22 +6,28 @@ namespace Processor {
     FileSystemProcessor::FileSystemProcessor(std::string &&directoryPath) : directoryPath(directoryPath) {}
 
     void FileSystemProcessor::fillListOfFiles() {
+        // TODO: IT can be deeper sys/stat ...
+
         std::filesystem::directory_iterator dir(directoryPath);
 
         for (auto& entry: dir) {
-//            if (entry.is_directory() || entry.is_fifo()) {
-//                continue;
-//            }
-            auto file = std::make_unique<File>(entry.path().string());
+            if (entry.is_directory() || entry.is_fifo() || entry.is_socket()) {
+                std::cerr << "There is not recognizable file..." << std::endl;
+                continue;
+            }
+            auto &&file = std::make_shared<File>(entry.path());
             fileList.push_back(std::move(file));
         }
-
-        //return std::move(fileList);
     }
 
     void FileSystemProcessor::debugPrint() {
         for (auto &file: fileList) {
-            std::cout << file->getFileName() << std::endl;
+            std::cout << file->getFilePath().string() << std::endl;
         }
     }
+
+    const std::vector<std::shared_ptr<File>> &FileSystemProcessor::getFileList() const {
+        return fileList;
+    }
+
 }
