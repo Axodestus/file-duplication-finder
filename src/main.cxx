@@ -48,7 +48,10 @@ int main() {
     Processor::FileSystemProcessor proc("/home/duckway");
     proc.fillListOfFiles();
     Processor::CheckSumProcessor check(proc.getFileList());
-    proc.debugPrint();
+    //proc.debugPrint();
+    for (auto &fileName : check.getCheckSumFileBundle()) {
+        std::cout << fileName.first << " -> " << fileName.second << std::endl;
+    }
 
     return 0;
 }

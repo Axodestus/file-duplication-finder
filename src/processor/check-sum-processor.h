@@ -2,6 +2,7 @@
 #define DUPLICATION_FINDER_CHECK_SUM_PROCESSOR_H
 
 #include <boost/crc.hpp>
+
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -11,14 +12,16 @@
 #include "entity/file.h"
 
 namespace Processor {
-    constexpr int BUFFER_SIZE = 1024;
+    constexpr int BUFFER_SIZE = 16;
 
     constexpr std::streamsize buffer_size = BUFFER_SIZE;
 
     using CRC32Type = boost::crc_32_type;
     using File = Processor::Entity::File;
+    using uMultiMap = std::unordered_multimap<unsigned int, std::string>;
 
     class CheckSumProcessor {
+
     private:
         CRC32Type checkSumBuilder;
         std::shared_ptr<File> file;
@@ -26,15 +29,12 @@ namespace Processor {
 
         char fileChunkBuffer[BUFFER_SIZE];
 
-
-        std::unordered_multimap<std::string, unsigned int> fileHashBundle;
+        uMultiMap fileHashBundle;
 
         void calculateChunkHash(std::streamsize size);
     public:
-        explicit CheckSumProcessor(std::string &&fileName);
-        CheckSumProcessor(std::vector<std::shared_ptr<File>> listOfFiles);
-        auto calculateCheckSum();
-        auto getCheckSumFileBundle();
+        explicit CheckSumProcessor(std::vector<std::shared_ptr<File>> listOfFiles);
+        uMultiMap getCheckSumFileBundle();
     };
 }
 

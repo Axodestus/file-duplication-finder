@@ -15,8 +15,13 @@ namespace Processor {
                 std::cerr << "There is not recognizable file..." << std::endl;
                 continue;
             }
-            auto &&file = std::make_shared<File>(entry.path());
-            fileList.push_back(std::move(file));
+
+            try {
+                auto &&file = std::make_shared<File>(entry.path());
+                fileList.push_back(std::move(file));
+            } catch (std::bad_alloc &e) {
+                std::cerr << e.what() << std::endl;
+            }
         }
     }
 

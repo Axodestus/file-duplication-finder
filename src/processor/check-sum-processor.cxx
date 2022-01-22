@@ -3,7 +3,6 @@
 #include "check-sum-processor.h"
 
 namespace Processor {
-    CheckSumProcessor::CheckSumProcessor(std::string &&fileName) : file(std::make_shared<File>(fileName)) {}
 
     CheckSumProcessor::CheckSumProcessor(std::vector<std::shared_ptr<File>> listOfFiles) :
             listOfFiles(std::move(listOfFiles)) {
@@ -13,22 +12,7 @@ namespace Processor {
         checkSumBuilder.process_bytes(fileChunkBuffer, size);
     }
 
-    auto CheckSumProcessor::calculateCheckSum(){
-        if (!file->getCurrentFileStream()) {
-            std::cerr << "Could not open the file..." << file->getFileName() << std::endl;
-            exit(1);
-        }
-
-        do {
-            file->getCurrentFileStream().read(fileChunkBuffer, buffer_size);
-
-            calculateChunkHash(file->getCurrentFileStream().gcount());
-
-        } while (file->getCurrentFileStream());
-        return checkSumBuilder.checksum();
-    }
-
-    auto CheckSumProcessor::getCheckSumFileBundle() {
+    uMultiMap CheckSumProcessor::getCheckSumFileBundle() {
         for (auto & file : listOfFiles) {
             if (!file->getCurrentFileStream()) {
                 std::cerr << "Could not open the file..." << file->getFileName() << std::endl;
@@ -41,8 +25,8 @@ namespace Processor {
                 calculateChunkHash(file->getCurrentFileStream().gcount());
 
             } while (file->getCurrentFileStream());
-
-            fileHashBundle.emplace(std::make_pair(file->getFileName(), checkSumBuilder.checksum()));
+            fileHashBundle.emplace(std::make_pair(checkSumBuilder.checksum(), file->getFileName()));
+            checkSumBuilder.reset();
         }
 
         return fileHashBundle;
