@@ -5,6 +5,7 @@
 #include <string>
 #include <memory>
 #include <filesystem>
+#include <utility>
 
 #include "processor/file-system-processor.h"
 #include "processor/check-sum-processor.h"

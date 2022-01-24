@@ -1,6 +1,3 @@
-#include <utility>
-#include <numeric>
-
 #include "duplication-finder.h"
 
 namespace Duplication {

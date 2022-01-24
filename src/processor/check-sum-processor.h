@@ -11,7 +11,9 @@
 
 #include "entity/file.h"
 
+// NOTE: boost entry...
 namespace Processor {
+
     constexpr int BUFFER_SIZE = 512;
 
     constexpr std::streamsize buffer_size = BUFFER_SIZE;

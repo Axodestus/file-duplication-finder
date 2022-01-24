@@ -17,12 +17,13 @@ namespace Processor {
 
     class FileSystemProcessor {
     private:
-        std::vector<std::unique_ptr<File>> fileList;         // too many may be
+
+        //NOTE: Too much io syscalls at now. So, we'll should... can make the threadpool.
+        std::vector<std::unique_ptr<File>> fileList;
         Path directoryPath;
     public:
         void setDirectoryPath(const Path &directoryPath);
 
-    public:
         explicit FileSystemProcessor(Path &&path);
 
         explicit FileSystemProcessor() noexcept = default;
