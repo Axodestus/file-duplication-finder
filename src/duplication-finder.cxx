@@ -1,4 +1,5 @@
 #include <utility>
+#include <numeric>
 
 #include "duplication-finder.h"
 
@@ -22,9 +23,25 @@ namespace Duplication {
         fileHashBundle = std::move(csProcessor.takeCheckSumFileBundle());
     }
 
+    // NOTE: Raw realization...it is not good for me...
     void DuplicationFinder::findDuplicates() {
-        for (auto &file_bundle: fileHashBundle) {
-            std::cout << file_bundle.first << " -> " << file_bundle.second << std::endl;
+        auto begin = fileHashBundle.begin();
+        auto end = fileHashBundle.end();
+
+        for (auto it = begin; it != end; ++it) {
+            auto range = fileHashBundle.equal_range(it->first);
+            auto countOfDuplicates = std::distance(range.first, range.second);
+
+            if (countOfDuplicates > 1) {
+                std::cout << "==================" << std::endl;
+                for (auto itr = range.first; itr != range.second; ++itr) {
+                    std::cout << itr->first << " -> " << itr->second << std::endl;
+                }
+
+                std::advance(it, countOfDuplicates - 1);
+                std::cout << "Found " << countOfDuplicates << " duplicates of files" << std::endl;
+            }
+
         }
     }
 
