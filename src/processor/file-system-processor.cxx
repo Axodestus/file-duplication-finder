@@ -3,22 +3,22 @@
 
 namespace Processor {
 
-    FileSystemProcessor::FileSystemProcessor(std::string &&directoryPath) : directoryPath(directoryPath) {}
+    FileSystemProcessor::FileSystemProcessor(Path &&path) : directoryPath(std::move(path)) {}
 
-    void FileSystemProcessor::fillListOfFiles() {
+    void FileSystemProcessor::putFiles() {
         // TODO: IT can be deeper sys/stat ...
 
         std::filesystem::directory_iterator dir(directoryPath);
 
-        for (auto& entry: dir) {
+        for (auto &entry: dir) {
             if (entry.is_directory() || entry.is_fifo() || entry.is_socket()) {
                 std::cerr << "There is not recognizable file..." << std::endl;
                 continue;
             }
 
             try {
-                auto &&file = std::make_shared<File>(entry.path());
-                fileList.push_back(std::move(file));
+                auto file = std::make_unique<File>(entry.path());
+                fileList.emplace_back(std::move(file));
             } catch (std::bad_alloc &e) {
                 std::cerr << e.what() << std::endl;
             }
@@ -31,8 +31,12 @@ namespace Processor {
         }
     }
 
-    const std::vector<std::shared_ptr<File>> &FileSystemProcessor::getFileList() const {
-        return fileList;
+    std::vector<std::unique_ptr<File>> &&FileSystemProcessor::takeFileList() {
+        return std::move(fileList);
+    }
+
+    void FileSystemProcessor::setDirectoryPath(const Path &directoryPath) {
+        FileSystemProcessor::directoryPath = directoryPath;
     }
 
 }

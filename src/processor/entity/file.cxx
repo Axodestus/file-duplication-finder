@@ -10,6 +10,12 @@ namespace Processor::Entity {
                                                    currentFileStream(fileName, std::ios_base::binary) {
     }
 
+    File::File(File &&rhs) noexcept : filePath(std::move(rhs.filePath)), fileName(std::move(rhs.fileName)) {
+        currentFileStream.swap(rhs.currentFileStream);
+        rhs.filePath = "";
+        rhs.fileName = nullptr;
+    }
+
     File::~File() {
         currentFileStream.close();
     }
@@ -18,8 +24,8 @@ namespace Processor::Entity {
         return fileName;
     }
 
-    std::ifstream &File::getCurrentFileStream() {
-        return currentFileStream;
+    std::ifstream &&File::getCurrentFileStream() {
+        return std::move(currentFileStream);
     }
 
     const std::filesystem::path &File::getFilePath() const {
