@@ -7,6 +7,7 @@
 
 namespace Processor::Entity {
 
+    // RAII object
     class File {
     private:
         std::filesystem::path filePath;
@@ -14,11 +15,15 @@ namespace Processor::Entity {
         std::ifstream currentFileStream;
     public:
         explicit File() noexcept = default;
+
         explicit File(std::string &&fileName);
+
         explicit File(const std::filesystem::path &filePath);
 
         explicit File(File &&rhs) noexcept;
+
         File& operator=(File&& rhs) noexcept;
+
         ~File();
 
         const std::string &getFileName() const;

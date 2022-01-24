@@ -8,12 +8,15 @@ namespace Processor {
             listOfFiles(std::move(listOfFiles)) {
     }
 
+    CheckSumProcessor::CheckSumProcessor() noexcept {
+    }
+
     void CheckSumProcessor::calculateChunkHash(std::streamsize size) {
         checkSumBuilder.process_bytes(fileChunkBuffer, size);
     }
 
-    uMultiMap CheckSumProcessor::getCheckSumFileBundle() {
-        for (auto & file : listOfFiles) {
+    uMultiMap &&CheckSumProcessor::takeCheckSumFileBundle() {
+        for (auto &file: listOfFiles) {
             if (!file->getCurrentFileStream()) {
                 std::cerr << "Could not open the file..." << file->getFileName() << std::endl;
                 exit(1);
@@ -28,6 +31,11 @@ namespace Processor {
             fileHashBundle.emplace(std::make_pair(checkSumBuilder.checksum(), file->getFileName()));
             checkSumBuilder.reset();
         }
-        return fileHashBundle;
+        return std::move(fileHashBundle);
     }
+
+    void CheckSumProcessor::setListOfFiles(std::vector<std::unique_ptr<File>> &&listOfFiles) {
+        CheckSumProcessor::listOfFiles = std::move(listOfFiles);
+    }
+
 }

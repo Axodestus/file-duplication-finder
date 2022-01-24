@@ -3,14 +3,14 @@
 
 namespace Processor {
 
-    FileSystemProcessor::FileSystemProcessor(std::string &&directoryPath) : directoryPath(directoryPath) {}
+    FileSystemProcessor::FileSystemProcessor(Path &&path) : directoryPath(std::move(path)) {}
 
-    void FileSystemProcessor::fillListOfFiles() {
+    void FileSystemProcessor::putFiles() {
         // TODO: IT can be deeper sys/stat ...
 
         std::filesystem::directory_iterator dir(directoryPath);
 
-        for (auto& entry: dir) {
+        for (auto &entry: dir) {
             if (entry.is_directory() || entry.is_fifo() || entry.is_socket()) {
                 std::cerr << "There is not recognizable file..." << std::endl;
                 continue;
@@ -31,8 +31,12 @@ namespace Processor {
         }
     }
 
-    std::vector<std::unique_ptr<File>> &&FileSystemProcessor::getFileList() {
+    std::vector<std::unique_ptr<File>> &&FileSystemProcessor::takeFileList() {
         return std::move(fileList);
+    }
+
+    void FileSystemProcessor::setDirectoryPath(const Path &directoryPath) {
+        FileSystemProcessor::directoryPath = directoryPath;
     }
 
 }

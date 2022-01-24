@@ -13,17 +13,25 @@
 namespace Processor {
 
     using File = Processor::Entity::File;
+    using Path = std::filesystem::path;
 
     class FileSystemProcessor {
     private:
         std::vector<std::unique_ptr<File>> fileList;         // too many may be
-        const std::string directoryPath;
+        Path directoryPath;
     public:
-        explicit FileSystemProcessor(std::string &&directoryPath);
-        void fillListOfFiles();
+        void setDirectoryPath(const Path &directoryPath);
+
+    public:
+        explicit FileSystemProcessor(Path &&path);
+
+        explicit FileSystemProcessor() noexcept = default;
+
+        void putFiles();
+
         void debugPrint();
 
-        std::vector<std::unique_ptr<File>> &&getFileList();
+        std::vector<std::unique_ptr<File>> &&takeFileList();
     };
 }
 
