@@ -17,8 +17,8 @@ namespace Processor {
             }
 
             try {
-                auto &&file = std::make_shared<File>(entry.path());
-                fileList.push_back(std::move(file));
+                auto file = std::make_unique<File>(entry.path());
+                fileList.emplace_back(std::move(file));
             } catch (std::bad_alloc &e) {
                 std::cerr << e.what() << std::endl;
             }
@@ -31,8 +31,8 @@ namespace Processor {
         }
     }
 
-    const std::vector<std::shared_ptr<File>> &FileSystemProcessor::getFileList() const {
-        return fileList;
+    std::vector<std::unique_ptr<File>> &&FileSystemProcessor::getFileList() {
+        return std::move(fileList);
     }
 
 }

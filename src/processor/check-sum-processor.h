@@ -24,8 +24,8 @@ namespace Processor {
 
     private:
         CRC32Type checkSumBuilder;
-        std::shared_ptr<File> file;
-        std::vector<std::shared_ptr<File>> listOfFiles;
+        std::unique_ptr<File> file;
+        std::vector<std::unique_ptr<File>> listOfFiles;
 
         char fileChunkBuffer[BUFFER_SIZE];
 
@@ -33,7 +33,7 @@ namespace Processor {
 
         void calculateChunkHash(std::streamsize size);
     public:
-        explicit CheckSumProcessor(std::vector<std::shared_ptr<File>> listOfFiles);
+        explicit CheckSumProcessor(std::vector<std::unique_ptr<File>> &&listOfFiles);
         uMultiMap getCheckSumFileBundle();
     };
 }

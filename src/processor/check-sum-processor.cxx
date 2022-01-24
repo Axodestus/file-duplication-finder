@@ -4,7 +4,7 @@
 
 namespace Processor {
 
-    CheckSumProcessor::CheckSumProcessor(std::vector<std::shared_ptr<File>> listOfFiles) :
+    CheckSumProcessor::CheckSumProcessor(std::vector<std::unique_ptr<File>> &&listOfFiles) :
             listOfFiles(std::move(listOfFiles)) {
     }
 
@@ -28,7 +28,6 @@ namespace Processor {
             fileHashBundle.emplace(std::make_pair(checkSumBuilder.checksum(), file->getFileName()));
             checkSumBuilder.reset();
         }
-
         return fileHashBundle;
     }
 }

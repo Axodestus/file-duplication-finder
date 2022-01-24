@@ -16,14 +16,14 @@ namespace Processor {
 
     class FileSystemProcessor {
     private:
-        std::vector<std::shared_ptr<File>> fileList;         // too many may be
+        std::vector<std::unique_ptr<File>> fileList;         // too many may be
         const std::string directoryPath;
     public:
         explicit FileSystemProcessor(std::string &&directoryPath);
         void fillListOfFiles();
         void debugPrint();
 
-        const std::vector<std::shared_ptr<File>> &getFileList() const;
+        std::vector<std::unique_ptr<File>> &&getFileList();
     };
 }
 
