@@ -12,7 +12,7 @@
 #include "entity/file.h"
 
 namespace Processor {
-    constexpr int BUFFER_SIZE = 16;
+    constexpr int BUFFER_SIZE = 512;
 
     constexpr std::streamsize buffer_size = BUFFER_SIZE;
 
@@ -21,20 +21,25 @@ namespace Processor {
     using uMultiMap = std::unordered_multimap<unsigned int, std::string>;
 
     class CheckSumProcessor {
-
     private:
         CRC32Type checkSumBuilder;
-        std::unique_ptr<File> file;
-        std::vector<std::unique_ptr<File>> listOfFiles;
 
         char fileChunkBuffer[BUFFER_SIZE];
+
+        std::vector<std::unique_ptr<File>> listOfFiles;
 
         uMultiMap fileHashBundle;
 
         void calculateChunkHash(std::streamsize size);
+
     public:
         explicit CheckSumProcessor(std::vector<std::unique_ptr<File>> &&listOfFiles);
-        uMultiMap getCheckSumFileBundle();
+
+        explicit CheckSumProcessor() noexcept;
+
+        uMultiMap &&takeCheckSumFileBundle();
+
+        void setListOfFiles(std::vector<std::unique_ptr<File>> &&listOfFiles);
     };
 }
 
