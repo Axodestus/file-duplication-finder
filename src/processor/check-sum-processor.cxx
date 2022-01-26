@@ -21,9 +21,9 @@ namespace Processor {
         for (auto &file: listOfFiles) {
             if (!file->getCurrentFileStream()) {
                 std::cerr << "Could not open the file..." << file->getFileName() << std::endl;
-                throw std::runtime_error("Could not open the file...");
             }
 
+            // NOTE: Problem with very big data.
             do {
                 file->getCurrentFileStream().read(fileChunkBuffer, buffer_size);
                 calculateChunkHash(file->getCurrentFileStream().gcount());

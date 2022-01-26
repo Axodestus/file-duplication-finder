@@ -8,7 +8,7 @@ namespace Processor {
             std::cerr << "There is empty path (doesn't exist inode for some reason)" << std::endl;
         }
         FileSystemProcessor::directoryPath = "/home";
-        std::cout << "The default home directory has been selected" << std::endl;
+        std::cout << "The default /home directory has been selected" << std::endl;
     }
 
     void FileSystemProcessor::putFiles() {
