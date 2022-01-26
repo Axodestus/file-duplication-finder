@@ -12,7 +12,7 @@ namespace Processor {
     }
 
     void FileSystemProcessor::putFiles() {
-        // TODO: IT can be deeper sys/stat ...
+        // NOTE: IT can be deeper sys/stat ...
 
         std::filesystem::directory_iterator dir(directoryPath);
 
