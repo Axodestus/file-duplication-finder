@@ -17,6 +17,7 @@ namespace Processor {
 
     class FileSystemProcessor {
     private:
+        bool isValidFilelist;
 
         //NOTE: Too much io syscalls at now. So, we'll should... can make the threadpool.
         std::vector<std::unique_ptr<File>> fileList;
