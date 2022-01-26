@@ -4,6 +4,9 @@ namespace Duplication {
 
     DuplicationFinder::DuplicationFinder(Path &&firstFolderPath, Path &&secondFolderPath) :
             firstFolderPath(std::move(firstFolderPath)), secondFolderPath(std::move(secondFolderPath)) {
+        if (firstFolderPath == secondFolderPath) {
+            std::cerr << "[Warning]: The same paths was chosen..." << std::endl;
+        }
         putFileBundles();
     }
 
