@@ -10,6 +10,10 @@ namespace Processor {
 
         std::filesystem::directory_iterator dir(directoryPath);
 
+        if (!dir->is_directory()) {
+            throw std::runtime_error("There is not a directory");
+        }
+
         for (auto &entry: dir) {
             if (entry.is_directory() || entry.is_fifo() || entry.is_socket()) {
                 std::cerr << "There is not recognizable file..." << std::endl;

@@ -13,6 +13,7 @@ namespace Duplication {
         fsProcessor.setDirectoryPath(secondFolderPath);
         fsProcessor.putFiles();
 
+        //NOTE: Collapse may be...
         auto &&files = fsProcessor.takeFileList();
 
         csProcessor.setListOfFiles(std::move(files));
@@ -25,13 +26,13 @@ namespace Duplication {
         auto begin = fileHashBundle.begin();
         auto end = fileHashBundle.end();
 
-        for (auto it = begin; it != end; ++it) {
+        for (auto &it = begin; it != end; ++it) {
             auto range = fileHashBundle.equal_range(it->first);
             auto countOfDuplicates = std::distance(range.first, range.second);
 
             if (countOfDuplicates > 1) {
                 std::cout << "==================" << std::endl;
-                for (auto itr = range.first; itr != range.second; ++itr) {
+                for (auto &itr = range.first; itr != range.second; ++itr) {
                     std::cout << itr->first << " -> " << itr->second << std::endl;
                 }
 

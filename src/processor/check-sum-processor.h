@@ -14,6 +14,7 @@
 // NOTE: boost entry...
 namespace Processor {
 
+    // NOTE: Here we could discover OS and available optimal buffer for the faster stream block reading.
     constexpr int BUFFER_SIZE = 512;
 
     constexpr std::streamsize buffer_size = BUFFER_SIZE;
