@@ -4,38 +4,38 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <memory>
 #include <string>
 #include <vector>
-#include <memory>
 
 #include "entity/file.h"
 
 namespace Processor {
 
-    using File = Processor::Entity::File;
-    using Path = std::filesystem::path;
+using File = Processor::Entity::File;
+using Path = std::filesystem::path;
 
-    class FileSystemProcessor {
-    private:
-        bool isValidFilelist;
+class FileSystemProcessor {
+private:
+    bool isValidFilelist;
 
-        //NOTE: Too much io syscalls at now. So, we'll should... can make the threadpool.
-        std::vector<std::unique_ptr<File>> fileList;
-        Path directoryPath;
-    public:
-        void setDirectoryPath(const Path &directoryPath);
+    // NOTE: Too much io syscalls at now. So, we'll should... can make the threadpool.
+    std::vector<std::unique_ptr<File>> fileList;
+    Path directoryPath;
 
-        explicit FileSystemProcessor(Path &&path);
+public:
+    void setDirectoryPath(const Path& directoryPath);
 
-        explicit FileSystemProcessor() noexcept = default;
+    explicit FileSystemProcessor(Path&& path);
 
-        void putFiles();
+    explicit FileSystemProcessor() noexcept = default;
 
-        void debugPrint();
+    void putFiles();
 
-        std::vector<std::unique_ptr<File>> &&takeFileList();
-    };
+    void debugPrint();
+
+    std::vector<std::unique_ptr<File>>&& takeFileList();
+};
 }
 
-
-#endif //DUPLICATION_FINDER_FILE_SYSTEM_PROCESSOR_H
+#endif // DUPLICATION_FINDER_FILE_SYSTEM_PROCESSOR_H

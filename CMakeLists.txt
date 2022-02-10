@@ -10,7 +10,7 @@ find_package(Boost 1.78.0 COMPONENTS crc)
 
 include_directories(${Boost_INCLUDE_DIRS})
 
-add_executable(duplication_finder src/main.cxx src/processor/file-system-processor.cxx src/processor/file-system-processor.h src/processor/check-sum-processor.cxx src/processor/check-sum-processor.h src/processor/entity/file.cxx src/processor/entity/file.h src/duplication-finder.cxx src/duplication-finder.h)
+add_executable(duplication_finder src/main.cc src/processor/file-system-processor.cc src/processor/file-system-processor.h src/processor/check-sum-processor.cc src/processor/check-sum-processor.h src/processor/entity/file.cc src/processor/entity/file.h src/duplication-finder.cc src/duplication-finder.h)
 target_link_libraries(duplication_finder ${Boost_LIBRARIES})
 
 
